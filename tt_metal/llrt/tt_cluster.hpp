@@ -97,6 +97,8 @@ class Cluster {
     void write_reg(const std::uint32_t *mem_ptr, tt_cxy_pair target, uint64_t addr) const;
     void read_reg(std::uint32_t *mem_ptr, tt_cxy_pair target, uint64_t addr) const;
 
+    void write32(tt_cxy_pair target, uint64_t addr, uint32_t val) const;
+
     void write_sysmem(const void* mem_ptr, uint32_t size_in_bytes, uint64_t addr, chip_id_t src_device_id, uint16_t channel) const;
     void read_sysmem(void *mem_ptr, uint32_t size_in_bytes, uint64_t addr, chip_id_t src_device_id, uint16_t channel) const;
 

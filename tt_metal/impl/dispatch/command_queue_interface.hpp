@@ -607,7 +607,8 @@ class SystemMemoryManager {
             command_size_16B |= (1 << ((sizeof(dispatch_constants::prefetch_q_entry_type) * 8) - 1));
         }
 
-        tt::Cluster::instance().write_reg(&command_size_16B, this->prefetcher_cores[cq_id], this->prefetch_q_dev_ptrs[cq_id]);
+        // tt::Cluster::instance().write_reg(&command_size_16B, this->prefetcher_cores[cq_id], this->prefetch_q_dev_ptrs[cq_id]);
+        tt::Cluster::instance().write32(this->prefetcher_cores[cq_id], this->prefetch_q_dev_ptrs[cq_id], command_size_16B);
         this->prefetch_q_dev_ptrs[cq_id] += sizeof(dispatch_constants::prefetch_q_entry_type);
     }
 };

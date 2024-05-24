@@ -434,6 +434,17 @@ void Cluster::read_reg(std::uint32_t *mem_ptr, tt_cxy_pair target, uint64_t addr
     this->get_driver(chip_id).read_from_device(mem_ptr, virtual_target, addr, size_in_bytes, "REG_TLB");
 }
 
+// TODO: not the correct API for this - for hot path, the callable object should
+// be created up-front and cached somewhere.
+void Cluster::write32(tt_cxy_pair target, uint64_t addr, uint32_t val) const {
+    auto &soc_desc = this->get_soc_desc(target.chip);
+    auto &driver = this->get_driver(target.chip);
+    auto &tt_sil_dev = dynamic_cast<tt_SiliconDevice &>(driver); // Gross.
+    auto fixed_up_target = soc_desc.convert_to_umd_coordinates(target);
+    auto callable = tt_sil_dev.get_static_tlb_write32_callable(fixed_up_target);
+    callable(addr, val);
+}
+
 void Cluster::write_sysmem(const void* vec, uint32_t size_in_bytes, uint64_t addr, chip_id_t src_device_id, uint16_t channel) const {
     TT_ASSERT(this->cluster_desc_->is_chip_mmio_capable(src_device_id));
     this->get_driver(src_device_id).write_to_sysmem(vec, size_in_bytes, addr, channel, src_device_id);
