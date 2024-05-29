@@ -21,8 +21,8 @@ if(BUILD_SHARED_LIBS)
     target_link_libraries(tt_metal PUBLIC device)
     add_dependencies(tt_metal umd_device)
 else()
-    target_link_libraries(tt_metal PUBLIC ${UMD_STATIC_LIB} metal_common_libs)
-    add_dependencies(tt_metal umd_static_lib_target)
+    target_link_libraries(tt_metal PUBLIC umd_device_static metal_common_libs)
+    add_dependencies(tt_metal umd_device_static)
 endif()
 
 target_link_libraries(tt_metal PUBLIC compiler_flags linker_flags metal_header_directories yaml-cpp $<$<BOOL:$ENV{ENABLE_TRACY}>:TracyClient>)  # linker_flags = -rdynamic if tracy enabled

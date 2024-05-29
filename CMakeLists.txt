@@ -147,9 +147,7 @@ if($ENV{ENABLE_TRACY})
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/tracy.cmake)
 endif()
 
-# Build umd_device
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/umd_device.cmake)
-
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tt_metal/third_party/umd)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tt_metal/hw)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tt_metal)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tt_eager)
