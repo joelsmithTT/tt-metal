@@ -441,8 +441,10 @@ void Cluster::write32(tt_cxy_pair target, uint64_t addr, uint32_t val) const {
     auto &driver = this->get_driver(target.chip);
     auto &tt_sil_dev = dynamic_cast<tt_SiliconDevice &>(driver); // Gross.
     auto fixed_up_target = soc_desc.convert_to_umd_coordinates(target);
-    auto callable = tt_sil_dev.get_static_tlb_write32_callable(fixed_up_target);
-    callable(addr, val);
+    //auto callable = tt_sil_dev.get_static_tlb_write32_callable(fixed_up_target);
+    //callable(addr, val);
+    auto writer = tt_sil_dev.get_static_tlb_write_callable(fixed_up_target);
+    writer.write(addr, val);
 }
 
 void Cluster::write_sysmem(const void* vec, uint32_t size_in_bytes, uint64_t addr, chip_id_t src_device_id, uint16_t channel) const {

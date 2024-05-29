@@ -32,6 +32,7 @@ set (CMAKE_CXX_FLAGS_ "--std=c++17 -fvisibility-inlines-hidden")
 include(ExternalProject)
 ExternalProject_Add(
     umd_device
+    BUILD_ALWAYS 1
     PREFIX ${UMD_HOME}
     SOURCE_DIR ${UMD_HOME}
     BINARY_DIR ${CMAKE_BINARY_DIR}

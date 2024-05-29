@@ -777,4 +777,14 @@ TEST_F(CommandQueueFixture, StressWrapTest) {
         this->device_, this->device_->command_queue(), config));
 }
 
+TEST_F(CommandQueueSingleCardFixture, TestFinishLooped) {
+    for (auto device : devices_) {
+        for (uint32_t i = 0; i < 10000000; ++i) {
+            std::cout << i << std::endl;
+            Finish(device->command_queue());
+        }
+    }
+}
+
+
 }  // end namespace stress_tests
